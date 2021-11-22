@@ -1,0 +1,25 @@
+###### TRAINING ######
+
+python Training.py -o results/InceptionV3/subfoldernamepls/ -t ~/Documents/datasets/single_animals_tvx/train -v  ~/Documents/datasets/single_animals_tvx/val -x  ~/Documents/datasets/single_animals_tvx/test -m_n InceptionV3 -n_c 15 -batch 16 -lr 0.05 -epochs 50 -d_n 128
+
+python Training.py -o results/MobileNetV2/subfoldernamepls/ -t ~/Documents/datasets/single_animals_tvx/train -v  ~/Documents/datasets/single_animals_tvx/val -x  ~/Documents/datasets/single_animals_tvx/test -m_n MobileNetV2 -n_c 15 -batch 16 -lr 0.01 -epochs 50 -d_n 128
+
+python Training.py -o results/ResNet18/subfoldernamepls/ -t ~/Documents/datasets/single_animals_tvx/train -v  ~/Documents/datasets/single_animals_tvx/val -x  ~/Documents/datasets/single_animals_tvx/test -m_n ResNet18 -n_c 15 -batch 16 -lr 0.01 -epochs 50 -d_n 128
+
+python Training.py -o results/EfficientNetB1/subfoldernamepls/ -t ~/Documents/datasets/single_animals_tvx/train -v  ~/Documents/datasets/single_animals_tvx/val -x  ~/Documents/datasets/single_animals_tvx/test -m_n EfficientNetB1 -n_c 15 -batch 8 -lr 0.05 -epochs 50 -d_n 128
+
+python Training.py -o results/DenseNet121/subfoldernamepls/ -t ~/Documents/datasets/single_animals_tvx/train -v  ~/Documents/datasets/single_animals_tvx/val -x  ~/Documents/datasets/single_animals_tvx/test -m_n DenseNet121 -n_c 15 -batch 16 -lr 0.01 -epochs 50 -d_n 128
+
+python Training.py -o results/Xception/subfoldernamepls/ -t ~/Documents/datasets/single_animals_tvx/train -v  ~/Documents/datasets/single_animals_tvx/val -x  ~/Documents/datasets/single_animals_tvx/test -m_n Xception -n_c 15 -batch 8 -lr 0.05 -epochs 50 -d_n 128
+
+###### K-Fold ######
+
+python KFold_ros.py -t ~/Documents/datasets/single_animals_tvx/train_ros+val/ -o results_main/KFold/InceptionV3_kfold.txt -m results_main/KFold/Inception_kfold_models/ -m_n InceptionV3 -n_c 14 -batch 16 -lr 0.05 -epochs 50 -d_n 512
+
+python KFold.py -t ~/Documents/datasets/dir_multi_animals/multi_animals_src/ -o results_main/KFold/MobileNetV2_kfold.txt -m_n MobileNetV2 -n_c 14 -batch 16 -lr 0.01 -epochs 50 -d_n 128
+
+python KFold.py -t ~/Documents/datasets/dir_multi_animals/multi_animals_src/ -o results_main/KFold/ResNet18_kfold.txt -m_n ResNet18 -n_c 14 -batch 16 -lr 0.01 -epochs 50 -d_n 512
+
+python KFold.py -t ~/Documents/datasets/dir_multi_animals/multi_animals_src/ -o results_main/KFold/DenseNet121_kfold.txt -m_n DenseNet121 -n_c 14 -batch 16 -lr 0.01 -epochs 50 -d_n 128
+
+python KFold_ros.py -t ~/Documents/datasets/single_animals_tvx/train_ros+val/ -o results_main/KFold/Xception_kfold.txt -m results_main/KFold/Xception_kfold_models/ -m_n Xception -n_c 14 -batch 8 -lr 0.05 -epochs 50 -d_n 512
