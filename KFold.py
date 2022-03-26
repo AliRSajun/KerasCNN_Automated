@@ -97,6 +97,11 @@ for subfolder in subfolders:
 for i in range(len(subfolders)):
     print("{} has {} files".format(subfolders[i], len(file_list[i])))
 
+#get list of labels from subfolder
+labels = []
+for subfolder in subfolders:
+    labels.append(os.path.basename(subfolder))
+print('labels: ', labels)
 
 df = pd.DataFrame(columns=['images','labels'])
 
@@ -107,10 +112,11 @@ for i in range(len(subfolders)):
     for j in range(len(file_list[i])):
         print(subfolders[i])
         print(i)
-        # append image path to df['images']
-        df['images'].append(subfolders[i]+"/"+file_list[i][j])
-        # append label to df['labels']
-        df['labels'].append(i)
+        df.concat([df, pd.DataFrame({'images': subfolders[i]+'/'+file_list[i][j], 'labels': labels[i]})])
+        # # append image path to df['images']
+        # df['images'].append(subfolders[i]+"/"+file_list[i][j])
+        # # append label to df['labels']
+        # df['labels'].append(i)
 
 print("image paths:\n", df['images'])
 print("labels:\n", df['labels'])
