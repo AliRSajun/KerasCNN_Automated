@@ -138,8 +138,8 @@ df.to_csv('train.csv')
 
 # initialize the data and labels
 print("[INFO] loading images...")
-data = []
-labels = []
+#data = []
+#labels = []
 
 num_classes=int(args["num_classes"])
 if (num_classes==2):
