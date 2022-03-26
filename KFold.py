@@ -101,15 +101,15 @@ for i in range(len(subfolders)):
 df = pd.DataFrame(columns=['images','labels'])
 
 #add path of all images to df['images'] and labels to df['labels']
-df['images']=[]
-df['labels']=[]
+# df['images']=[]
+# df['labels']=[]
 for i in range(len(subfolders)):
     for j in range(len(file_list[i])):
         df['images'] = df['images']+(subfolders[i]+'/'+file_list[i][j])
         df['labels'] = df['labels']+subfolders[i]
 
-print("image paths:\n", df['images'].head())
-print("labels:\n", df['labels'].head())
+print("image paths:\n", df['images'])
+print("labels:\n", df['labels'])
 
 
 #df['images']=[ac_dir+str(x) for x in images_train_ac]+[ad_dir+str(x) for x in images_train_ad]+[ah_dir+str(x) for x in images_train_ah]+[camel_dir+str(x) for x in images_train_camel]+[cat_dir+str(x) for x in images_train_cat]+[dog_dir+str(x) for x in images_train_dog]+[donkey_dir+str(x) for x in images_train_donkey]+[es_dir+str(x) for x in images_train_es]+[fox_dir+str(x) for x in images_train_fox]+[ghost_dir+str(x) for x in images_train_ghost]+[goat_dir+str(x) for x in images_train_goat]+[oa_dir+str(x) for x in images_train_oa]+[rat_dir+str(x) for x in images_train_rat]+[sheep_dir+str(x) for x in images_train_sheep]+[ss_dir+str(x) for x in images_train_ss]
