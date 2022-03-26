@@ -86,6 +86,8 @@ train_set_dir = args["traindir"]
 # get all subfolders within the train_set_dir
 subfolders = [f.path for f in os.scandir(train_set_dir) if f.is_dir()]
 
+print(subfolders)
+
 # get list of files in each subfolder
 file_list = []
 for subfolder in subfolders:
@@ -220,10 +222,10 @@ for train_index, val_index in kf.split(np.zeros(n),Y):
         model = create_InceptionV3(num_classes=num_classes,learn_rate=learning_rate,activation = activation, optimizer=optimizer, dense_neurons=dense_neurons)
         image_size = 299
 
-    # elif (model_name=="ResNet18"): 
-    #     # learning_rate=0.01,num_classes=2, dense_neurons=512,activation = 'softmax', optimizer='SGD'
-    #     model = create_ResNet18(num_classes=num_classes,learn_rate=learning_rate,activation = activation, optimizer=optimizer, dense_neurons=dense_neurons)
-    #     image_size = 224
+    elif (model_name=="ResNet18"): 
+        # learning_rate=0.01,num_classes=2, dense_neurons=512,activation = 'softmax', optimizer='SGD'
+        model = create_ResNet18(num_classes=num_classes,learn_rate=learning_rate,activation = activation, optimizer=optimizer, dense_neurons=dense_neurons)
+        image_size = 224
 
     elif (model_name=="Xception"): 
         # learning_rate=0.01,num_classes=2, dense_neurons=1024,activation = 'softmax', optimizer='SGD'
