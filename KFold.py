@@ -83,74 +83,35 @@ args = vars(ap.parse_args())
 print (os.getcwd())
 train_set_dir = args["traindir"]
 
-ac_dir = train_set_dir + 'AC/'
-ad_dir = train_set_dir + 'AD/'
-ah_dir = train_set_dir + 'AH/'
-camel_dir = train_set_dir + 'Camel/'
-cat_dir = train_set_dir + 'Cat/'
-dog_dir = train_set_dir + 'Dog/'
-donkey_dir = train_set_dir + 'Donkey/'
-es_dir = train_set_dir + 'ES/'
-fox_dir = train_set_dir + 'Fox/'
-ghost_dir = train_set_dir + 'Ghost/'
-goat_dir = train_set_dir + 'Goat/'
-oa_dir = train_set_dir + 'OA/'
-rat_dir = train_set_dir + 'Rat/'
-sheep_dir = train_set_dir + 'Sheep/'
-ss_dir = train_set_dir + 'SS/'
+# get all subfolders within the train_set_dir
+subfolders = [f.path for f in os.scandir(train_set_dir) if f.is_dir()]
 
-files_in_train_ac = sorted(os.listdir(ac_dir))
-files_in_train_ad = sorted(os.listdir(ad_dir))
-files_in_train_ah = sorted(os.listdir(ah_dir))
-files_in_train_camel = sorted(os.listdir(camel_dir))
-files_in_train_cat = sorted(os.listdir(cat_dir))
-files_in_train_dog = sorted(os.listdir(dog_dir))
-files_in_train_donkey = sorted(os.listdir(donkey_dir))
-files_in_train_es = sorted(os.listdir(es_dir))
-files_in_train_fox = sorted(os.listdir(fox_dir))
-files_in_train_ghost = sorted(os.listdir(ghost_dir))
-files_in_train_goat = sorted(os.listdir(goat_dir))
-files_in_train_oa = sorted(os.listdir(oa_dir))
-files_in_train_rat = sorted(os.listdir(rat_dir))
-files_in_train_sheep = sorted(os.listdir(sheep_dir))
-files_in_train_ss = sorted(os.listdir(ss_dir))
+# get list of files in each subfolder
+file_list = []
+for subfolder in subfolders:
+    file_list.append(os.listdir(subfolder))
 
-images_train_ac=[i for i in files_in_train_ac]
-images_train_ad=[i for i in files_in_train_ad]
-images_train_ah=[i for i in files_in_train_ah]
-images_train_camel=[i for i in files_in_train_camel]
-images_train_cat=[i for i in files_in_train_cat]
-images_train_dog=[i for i in files_in_train_dog]
-images_train_donkey=[i for i in files_in_train_donkey]
-images_train_es=[i for i in files_in_train_es]
-images_train_fox=[i for i in files_in_train_fox]
-images_train_ghost=[i for i in files_in_train_ghost]
-images_train_goat=[i for i in files_in_train_goat]
-images_train_oa=[i for i in files_in_train_oa]
-images_train_rat=[i for i in files_in_train_rat]
-images_train_sheep=[i for i in files_in_train_sheep]
-images_train_ss=[i for i in files_in_train_ss]
+# print number of files in each subfolder
+for i in range(len(subfolders)):
+    print("{} has {} files".format(subfolders[i], len(file_list[i])))
 
-print(len(images_train_ac))
-print(len(images_train_ad))
-print(len(images_train_ah))
-print(len(images_train_camel))
-print(len(images_train_cat))
-print(len(images_train_dog))
-print(len(images_train_donkey))
-print(len(images_train_es))
-print(len(images_train_fox))
-print(len(images_train_ghost))
-print(len(images_train_goat))
-print(len(images_train_oa))
-print(len(images_train_rat))
-print(len(images_train_sheep))
-print(len(images_train_ss))
 
 df = pd.DataFrame(columns=['images','labels'])
 
-df['images']=[ac_dir+str(x) for x in images_train_ac]+[ad_dir+str(x) for x in images_train_ad]+[ah_dir+str(x) for x in images_train_ah]+[camel_dir+str(x) for x in images_train_camel]+[cat_dir+str(x) for x in images_train_cat]+[dog_dir+str(x) for x in images_train_dog]+[donkey_dir+str(x) for x in images_train_donkey]+[es_dir+str(x) for x in images_train_es]+[fox_dir+str(x) for x in images_train_fox]+[ghost_dir+str(x) for x in images_train_ghost]+[goat_dir+str(x) for x in images_train_goat]+[oa_dir+str(x) for x in images_train_oa]+[rat_dir+str(x) for x in images_train_rat]+[sheep_dir+str(x) for x in images_train_sheep]+[ss_dir+str(x) for x in images_train_ss]
-df['labels']=[str('AC') for x in images_train_ac]+[str('AD') for x in images_train_ad]+[str('AH') for x in images_train_ah]+[str('Camel') for x in images_train_camel]+[str('Cat') for x in images_train_cat]+[str('Dog') for x in images_train_dog]+[str('Donkey') for x in images_train_donkey]+[str('ES') for x in images_train_es]+[str('Fox') for x in images_train_fox]+[str('Ghost') for x in images_train_ghost]+[str('Goat') for x in images_train_goat]+[str('OA') for x in images_train_oa]+[str('Rat') for x in images_train_rat]+[str('Sheep') for x in images_train_sheep]+[str('SS') for x in images_train_ss]
+#add path of all images to df['images'] and labels to df['labels']
+df['images']=[]
+df['labels']=[]
+for i in range(len(subfolders)):
+    for j in range(len(file_list[i])):
+        df['images'].append(subfolders[i]+'/'+file_list[i][j])
+        df['labels'].append(subfolders[i])
+
+print("image paths:\n", df['images'].head())
+print("labels:\n", df['labels'].head())
+
+
+#df['images']=[ac_dir+str(x) for x in images_train_ac]+[ad_dir+str(x) for x in images_train_ad]+[ah_dir+str(x) for x in images_train_ah]+[camel_dir+str(x) for x in images_train_camel]+[cat_dir+str(x) for x in images_train_cat]+[dog_dir+str(x) for x in images_train_dog]+[donkey_dir+str(x) for x in images_train_donkey]+[es_dir+str(x) for x in images_train_es]+[fox_dir+str(x) for x in images_train_fox]+[ghost_dir+str(x) for x in images_train_ghost]+[goat_dir+str(x) for x in images_train_goat]+[oa_dir+str(x) for x in images_train_oa]+[rat_dir+str(x) for x in images_train_rat]+[sheep_dir+str(x) for x in images_train_sheep]+[ss_dir+str(x) for x in images_train_ss]
+#df['labels']=[str('AC') for x in images_train_ac]+[str('AD') for x in images_train_ad]+[str('AH') for x in images_train_ah]+[str('Camel') for x in images_train_camel]+[str('Cat') for x in images_train_cat]+[str('Dog') for x in images_train_dog]+[str('Donkey') for x in images_train_donkey]+[str('ES') for x in images_train_es]+[str('Fox') for x in images_train_fox]+[str('Ghost') for x in images_train_ghost]+[str('Goat') for x in images_train_goat]+[str('OA') for x in images_train_oa]+[str('Rat') for x in images_train_rat]+[str('Sheep') for x in images_train_sheep]+[str('SS') for x in images_train_ss]
 df = shuffle(df)
 df.reset_index(drop=True, inplace=True) 
 print(df.columns)
@@ -192,7 +153,10 @@ fold_num=1
 def Average(lst): 
     return sum(lst) / len(lst)
 
-n=len(images_train_ac)+len(images_train_ad)+len(images_train_ah)+len(images_train_camel)+len(images_train_cat)+len(images_train_dog)+len(images_train_donkey)+len(images_train_es)+len(images_train_fox)+len(images_train_ghost)+len(images_train_goat)+len(images_train_oa)+len(images_train_rat)+len(images_train_sheep)+len(images_train_ss)
+# total number of images in folder
+n = len(df['images'])
+
+#n=len(images_train_ac)+len(images_train_ad)+len(images_train_ah)+len(images_train_camel)+len(images_train_cat)+len(images_train_dog)+len(images_train_donkey)+len(images_train_es)+len(images_train_fox)+len(images_train_ghost)+len(images_train_goat)+len(images_train_oa)+len(images_train_rat)+len(images_train_sheep)+len(images_train_ss)
 print('n = ', n)
 # ac_fscores = []
 # ad_fscores = []
