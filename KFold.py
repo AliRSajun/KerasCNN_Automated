@@ -322,10 +322,10 @@ for train_index, val_index in kf.split(np.zeros(n),Y):
     # print('predictions len --> ', len(predictions))
 	
     if num_classes == 2:
-        target_names = ['Animal', 'Ghost']
+        target_names = labels
         y_pred = np.array([int(np.round(p)) for p in predictions])
     else:
-        target_names = ['AC', 'AD', 'AH', 'Camel', 'Cat', 'Dog', 'Donkey', 'ES', 'Fox', 'Ghost', 'Goat', 'OA', 'Rat', 'Sheep', 'SS']
+        target_names = labels
         y_pred=np.argmax(predictions,axis=1)
 
     print('y_true', y_true)
