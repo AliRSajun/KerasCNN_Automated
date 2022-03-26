@@ -105,8 +105,8 @@ df['images']=[]
 df['labels']=[]
 for i in range(len(subfolders)):
     for j in range(len(file_list[i])):
-        df['images'].append(subfolders[i]+'/'+file_list[i][j])
-        df['labels'].append(subfolders[i])
+        df['images'] = df['images']+(subfolders[i]+'/'+file_list[i][j])
+        df['labels'] = df['labels']+subfolders[i]
 
 print("image paths:\n", df['images'].head())
 print("labels:\n", df['labels'].head())
