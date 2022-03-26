@@ -108,15 +108,18 @@ df = pd.DataFrame(columns=['images','labels'])
 #add path of all images to df['images'] and labels to df['labels']
 # df['images']=[]
 # df['labels']=[]
+images = []
+labels = []
+
 for i in range(len(subfolders)):
     for j in range(len(file_list[i])):
         print(subfolders[i])
         print(i)
-        df.concat([df, pd.DataFrame({'images': subfolders[i]+'/'+file_list[i][j], 'labels': labels[i]})])
-        # # append image path to df['images']
-        # df['images'].append(subfolders[i]+"/"+file_list[i][j])
-        # # append label to df['labels']
-        # df['labels'].append(i)
+        images.append(subfolders[i]+'/'+file_list[i][j])
+        labels.append(labels[i])
+
+df['images']=images
+df['labels']=labels
 
 print("image paths:\n", df['images'])
 print("labels:\n", df['labels'])
