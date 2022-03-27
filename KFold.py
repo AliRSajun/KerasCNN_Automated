@@ -336,36 +336,12 @@ for train_index, val_index in kf.split(np.zeros(n),Y):
     print('Classification Report')
     print(report)
     dict_report = classification_report(y_true, y_pred, target_names=target_names, output_dict=True)
-    # ac_fscores.append(dict_report['AC']['f1-score'])
-    # ad_fscores.append(dict_report['AD']['f1-score'])
-    # ah_fscores.append(dict_report['AH']['f1-score'])
-    # camel_fscores.append(dict_report['Camel']['f1-score'])
-    # cat_fscores.append(dict_report['Cat']['f1-score'])
-    # dog_fscores.append(dict_report['Dog']['f1-score'])
-    # donkey_fscores.append(dict_report['Donkey']['f1-score'])
-    # es_fscores.append(dict_report['ES']['f1-score'])
-    # fox_fscores.append(dict_report['Fox']['f1-score'])
-    # goat_fscores.append(dict_report['Goat']['f1-score'])
-    # oa_fscores.append(dict_report['OA']['f1-score'])
-    # rat_fscores.append(dict_report['Rat']['f1-score'])
-    # sheep_fscores.append(dict_report['Sheep']['f1-score'])
-    # ss_fscores.append(dict_report['SS']['f1-score'])
-    # accuracies.append(dict_report['accuracy'])
+    
 
     file.write("*~~~* Fold #%d results *~~~*\n" % fold_num)
     file.write(report)
     file.write("\n\n")
 
-#     results = model.evaluate(valid_data_generator)
-#     results = dict(zip(model.metrics_names,results))
-
-#     file.write("*~~~* Fold #%d results *~~~*\n" % fold_num)
-#     file.write("Test Accuracy: ")
-#     file.write(str(results['accuracy']))
-#     file.write("\n")
-#     file.write("Test Loss: ")
-#     file.write(str(results['loss']))
-#     file.write("\n\n")
 
     tf.keras.backend.clear_session()
     fold_num = fold_num + 1
@@ -373,79 +349,30 @@ for train_index, val_index in kf.split(np.zeros(n),Y):
     K.clear_session()
     gc.collect()
 
-# avg_ac_fscore = round(Average(ac_fscores),2)
-# avg_ad_fscore = round(Average(ad_fscores),2)
-# avg_ah_fscore = round(Average(ah_fscores),2)
-# avg_camel_fscore = round(Average(camel_fscores),2)
-# avg_cat_fscore = round(Average(cat_fscores),2)
-# avg_dog_fscore = round(Average(dog_fscores),2)
-# avg_donkey_fscore = round(Average(donkey_fscores),2)
-# avg_es_fscore = round(Average(es_fscores),2)
-# avg_fox_fscore = round(Average(fox_fscores),2)
-# avg_goat_fscore = round(Average(goat_fscores),2)
-# avg_oa_fscore = round(Average(oa_fscores),2)
-# avg_rat_fscore = round(Average(rat_fscores),2)
-# avg_sheep_fscore = round(Average(sheep_fscores),2)
-# avg_ss_fscore = round(Average(ss_fscores),2)
-
-# file.write('Average AC F1-Score: ')
-# file.write(str(avg_ac_fscore))
-# file.write("\n")
-# file.write('Average AD F1-Score: ')
-# file.write(str(avg_ad_fscore))
-# file.write("\n")
-# file.write('Average AH F1-Score: ')
-# file.write(str(avg_ah_fscore))
-# file.write("\n")
-# file.write('Average Camel F1-Score: ')
-# file.write(str(avg_camel_fscore))
-# file.write("\n")
-# file.write('Average Cat F1-Score: ')
-# file.write(str(avg_cat_fscore))
-# file.write("\n")
-# file.write('Average Dog F1-Score: ')
-# file.write(str(avg_dog_fscore))
-# file.write("\n")
-# file.write('Average Donkey F1-Score: ')
-# file.write(str(avg_donkey_fscore))
-# file.write("\n")
-# file.write('Average ES F1-Score: ')
-# file.write(str(avg_es_fscore))
-# file.write("\n")
-# file.write('Average Fox F1-Score: ')
-# file.write(str(avg_fox_fscore))
-# file.write("\n")
-# file.write('Average Goat F1-Score: ')
-# file.write(str(avg_goat_fscore))
-# file.write("\n")
-# file.write('Average OA F1-Score: ')
-# file.write(str(avg_oa_fscore))
-# file.write("\n")
-# file.write('Average Rat F1-Score: ')
-# file.write(str(avg_rat_fscore))
-# file.write("\n")
-# file.write('Average Sheep F1-Score: ')
-# file.write(str(avg_sheep_fscore))
-# file.write("\n")
-# file.write('Average SS F1-Score: ')
-# file.write(str(avg_ss_fscore))
-# file.write("\n")
-
-# avg_accuracy = round(Average(accuracies),2)
-
-# file.write('Average Accuracy: ')
-# file.write(str(avg_accuracy))
-# file.write("\n")
 file.close()
 
 # ------------------------------------------------------------- #
 # --------------- TIME STATS AND EMAIL NOTIF ------------------ #
 # ------------------------------------------------------------- #
+def get_ip():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        # doesn't even have to be reachable
+        s.connect(('10.255.255.255', 1))
+        IP = s.getsockname()[0]
+    except Exception:
+        IP = '127.0.0.1'
+    finally:
+        s.close()
+    return IP
+
+my_ip = str(get_ip())
+user = os.getlogin()
 
 current_time = time.ctime()
 # send email notification
-body = "Model: " + model_name + " - K-Fold complete @ " + current_time
-to = ['b00067871@aus.edu','b00068908@aus.edu', 'g00071496@aus.edu', 'g00068368@aus.edu']
+body = "\nMessage from: "+user+"@"+my_ip+"\nModel: " + model_name + " - K-Fold complete @ " + current_time
+to = ['b00068908@aus.edu']
 send_email(body, to)
 
 print("K-Fold complete!")
