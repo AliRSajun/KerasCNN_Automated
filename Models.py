@@ -14,7 +14,7 @@ import random
 import pickle
 import cv2
 import os
-#from ResNet_Weights import ResNet18
+from ResNet_Weights import ResNet18
 from keras.models import Sequential , Model
 from keras import layers
 from keras.layers.core import Dense, Dropout 
@@ -25,7 +25,7 @@ from keras.applications.inception_v3 import preprocess_input as inception_v3_pre
 from keras.applications import MobileNetV2, inception_v3
 from keras.applications.densenet import *
 from keras.applications.xception import *
-# import efficientnet.keras as efn
+import efficientnet.keras as efn
 from keras import backend as K   # session cleaning for gridsearch
 
 # ------------------------------------------------------------- #
@@ -200,40 +200,40 @@ def create_EfficientNetB1(learn_rate=0.01,num_classes=2, dense_neurons=512,activ
 # ------------------------- ResNet18 -------------------------- #
 # ------------------------------------------------------------- #
 
-# def create_ResNet18(learn_rate=0.01,num_classes=2, dense_neurons=512,activation = 'softmax', optimizer='SGD'):
-#     K.clear_session()
+def create_ResNet18(learn_rate=0.01,num_classes=2, dense_neurons=512,activation = 'softmax', optimizer='SGD'):
+    K.clear_session()
     
-#     image_size = 224
-#     if (optimizer=="SGD"):
-#         optimizer = SGD(lr=learn_rate)
-#     elif (optimizer=="Adam"):
-#         optimizer = Adam(lr=learn_rate)
+    image_size = 224
+    if (optimizer=="SGD"):
+        optimizer = SGD(lr=learn_rate)
+    elif (optimizer=="Adam"):
+        optimizer = Adam(lr=learn_rate)
 
-#     # Load the MobileNet model with 3 classes and initialized to imagenet
-#     resnet18 = ResNet18(input_shape=(image_size, image_size, 3), weights='imagenet', classes=3, include_top=False)
-#     model = Sequential()
-#     model.add(resnet18)
-#     model.add(GlobalAveragePooling2D())
-#     model.add(Dense(dense_neurons, activation='relu'))
-#     if (num_classes==2):
-#         model.add(Dense(1, activation=activation))
-#     else:
-#         model.add(Dense(num_classes, activation=activation))
+    # Load the MobileNet model with 3 classes and initialized to imagenet
+    resnet18 = ResNet18(input_shape=(image_size, image_size, 3), weights='imagenet', classes=3, include_top=False)
+    model = Sequential()
+    model.add(resnet18)
+    model.add(GlobalAveragePooling2D())
+    model.add(Dense(dense_neurons, activation='relu'))
+    if (num_classes==2):
+        model.add(Dense(1, activation=activation))
+    else:
+        model.add(Dense(num_classes, activation=activation))
 
-#     # unfreeze all layers
-#     for layer in model.layers:
-#         layer.trainable = True
+    # unfreeze all layers
+    for layer in model.layers:
+        layer.trainable = True
 
-#     model.summary()
+    model.summary()
 
-#     if (num_classes==2):
-#         model.compile(loss="binary_crossentropy", optimizer=optimizer,
-#                     metrics=["accuracy"])
-#     else:
-#         model.compile(loss="categorical_crossentropy", optimizer=optimizer,
-#                     metrics=["accuracy"])
+    if (num_classes==2):
+        model.compile(loss="binary_crossentropy", optimizer=optimizer,
+                    metrics=["accuracy"])
+    else:
+        model.compile(loss="categorical_crossentropy", optimizer=optimizer,
+                    metrics=["accuracy"])
 
-#     return model
+    return model
 
 
 # ------------------------------------------------------------- #
